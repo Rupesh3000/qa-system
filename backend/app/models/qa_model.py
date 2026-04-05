@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional
+from typing import Dict
 
 
 class CallScoreInput(BaseModel):
@@ -14,6 +14,9 @@ class CallScoreInput(BaseModel):
 
 class CallScoreResponse(BaseModel):
     agent_name: str
+    transcript: str
+    scores: Dict[str, int]
     total_score: float
     result: str
+    summary: str
     created_at: datetime
