@@ -32,6 +32,8 @@ async def audit_call(file: UploadFile = File(...)):
 
         score_result = calculate_qa_score(scores)
 
+
+# before fetch data make sure convert python object in Json 
         return CallScoreResponse(
             agent_name="Auto-Detected",
             transcript=transcript,

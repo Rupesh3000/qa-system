@@ -18,36 +18,25 @@ def transcribe_audio(file_path: str) -> str:
 
 def analyze_transcript(transcript: str) -> dict:
     prompt = f"""
-You are a strict call center QA evaluator.
+You are a call center QA expert.
 
-Score each parameter from 0 to 10:
+Analyze the transcript and score each parameter from 0 to 10.
 
-Greeting:
-0 = no greeting, 10 = perfect greeting
-
-Empathy:
-0 = no empathy, 10 = strong empathy
-
-Tone:
-0 = rude, 10 = polite
-
-Apology:
-0 = none, 10 = proper apology
-
-Closing:
-0 = abrupt, 10 = proper closing
+For EACH parameter return:
+- score (0-10)
+- reason (short explanation)
 
 Transcript:
 {transcript}
 
-Return ONLY valid JSON:
+Return ONLY JSON:
+
 {{
-    "greeting": int,
-    "empathy": int,
-    "tone": int,
-    "apology": int,
-    "closing": int,
-    "summary": string
+  "greeting": {{ "score": <int>, "reason": "<text>" }},
+  "empathy": {{ "score": <int>, "reason": "<text>" }},
+  "tone": {{ "score": <int>, "reason": "<text>" }},
+  "apology": {{ "score": <int>, "reason": "<text>" }},
+  "closing": {{ "score": <int>, "reason": "<text>" }}
 }}
 """
 
@@ -78,11 +67,11 @@ Return ONLY valid JSON:
 
 def calculate_qa_score(scores: dict) -> dict:
     total = (
-        scores.get("greeting", 0)
-        + scores.get("empathy", 0)
-        + scores.get("tone", 0)
-        + scores.get("apology", 0)
-        + scores.get("closing", 0)
+        scores["greeting"]["score"]
+        + scores["empathy"]["score"]
+        + scores["tone"]["score"]
+        + scores["apology"]["score"]
+        + scores["closing"]["score"]
     )
 
     percentage = (total / 50) * 100
