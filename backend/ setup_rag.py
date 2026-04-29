@@ -33,7 +33,7 @@ embeddings_model = GoogleGenerativeAIEmbeddings(
     model="models/gemini-embedding-001", google_api_key=my_key
 )
 
-vector_sotre = Chroma.from_documents(
+vector_store = Chroma.from_documents(
     documents=texts,
     embedding=embeddings_model,
     persist_directory="./Vector"
